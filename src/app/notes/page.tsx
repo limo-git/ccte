@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import JoditEditor from 'jodit-react';
 import axios from 'axios';
-import DOMPurify from 'dompurify';
+
 
 
 interface Note {
@@ -41,12 +41,12 @@ const Notes: React.FC = () => {
   const addNote = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
-      const sanitizedContent = DOMPurify.sanitize(content, { ALLOWED_TAGS: ['b', 'i', 'u', 'a', 'ul', 'ol', 'li'] }); 
+      
       const newNote: Note = {
         id: Date.now(),
         timestamp: currentTime,
         date: new Date().toLocaleString(),
-        content: sanitizedContent,
+        content: content,
       };
       const updatedNotes = [...notes, newNote];
       setNotes(updatedNotes);
