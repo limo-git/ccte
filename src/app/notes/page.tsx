@@ -21,25 +21,11 @@ const Notes: React.FC = () => {
   const [content,setContent] = useState("")
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const playerRef = useRef<ReactPlayer>(null);
-  const [videoTitle, setVideoTitle] = useState<string>('');
-  const [videoDescription, setVideoDescription] = useState<string>('');
+ 
  
 
-  useEffect(() => {
-    const url = localStorage.getItem('videoUrl');
-    if (url) {
-      setVideoUrl(url);
-      const id = extractVideoId(url);
-      setVideoId(id);
-      loadNotes(id);
-      fetchVideoInfo(id);
-    }
-  }, []);
 
-  const extractVideoId = (url: string): string => {
-    const urlObj = new URL(url);
-    return urlObj.searchParams.get('v') || '';
-  };
+
 
   const loadNotes = (videoId: string) => {
     const storedNotes = localStorage.getItem(`notes-${videoId}`);
@@ -103,8 +89,7 @@ const Notes: React.FC = () => {
     try {
       const response = await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${process.env.YOUTUBE_API_KEY}&part=snippet`);
       const videoData = response.data.items[0].snippet;
-      setVideoTitle(videoData.title);
-      setVideoDescription(videoData.description);
+      
     } catch (error:any) {
       console.error('Error fetching video info:', error);
       if (error.response) {
@@ -130,8 +115,8 @@ const Notes: React.FC = () => {
         <ReactPlayer ref={playerRef} url={videoUrl} width="100%" height="100%" controls />
       </div>
       <div className="mx-12 my-6">
-        <h1 className="font-semibold">Video Title: {videoTitle}</h1>
-        <p className="my-4">{videoDescription}</p>
+        <h1 className="font-semibold">Video Title</h1>
+        <p className="my-4">description</p>
       </div>
       <hr className="mx-12" />
   
