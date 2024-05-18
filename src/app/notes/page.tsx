@@ -166,4 +166,6 @@ function Notes() {
   );
 }
 
-export default Notes;
+export default function NotesWithClient() {
+  return <Notes />;
+}
