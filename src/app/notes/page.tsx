@@ -1,9 +1,12 @@
 "use client"
 import { useEffect, useState, useRef } from 'react';
 import ReactPlayer from 'react-player/youtube';
-import JoditEditor from 'jodit-react';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
+import dynamic from 'next/dynamic';
+const JoditEditor = dynamic(() => import("jodit-react"), {
+  ssr: false,
+});
 
 
 
@@ -129,7 +132,7 @@ function Notes() {
         </p>
         <div>
          
-          <JoditEditor ref={editor} value={content} onChange={newContent => setContent(newContent)}
+          <JoditEditor ref={editor} value={content} onChange={(newContent:string) => setContent(newContent)}
             />
           {editingNote ? (
             <button onClick={saveEditNote} className="border-black/50 font-semibold text-black mt-4 py-3 px-8 flex justify-center items-center border rounded-xl ">
