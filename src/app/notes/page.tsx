@@ -3,8 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import JoditEditor from 'jodit-react';
 import axios from 'axios';
-import DOMPurify from 'dompurify';
-
+import sanitizeHtml from 'sanitize-html';
 
 
 interface Note {
@@ -42,7 +41,13 @@ function Notes() {
   const addNote = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
-      const sanitizedContent = DOMPurify.sanitize(content, { ALLOWED_TAGS: ['b', 'i', 'u', 'a', 'ul', 'ol', 'li'] }); 
+      
+const sanitizedContent = sanitizeHtml(content, {
+  allowedTags: ['b', 'i', 'u', 'a', 'ul', 'ol', 'li'],
+  allowedAttributes: {
+    'a': ['href', 'target'], // Allow href and target attributes on anchor tags
+  },
+});
       const newNote: Note = {
         id: Date.now(),
         timestamp: currentTime,
