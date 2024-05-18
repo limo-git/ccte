@@ -23,8 +23,7 @@ const Notes: React.FC = () => {
   const playerRef = useRef<ReactPlayer>(null);
   const [videoTitle, setVideoTitle] = useState<string>('');
   const [videoDescription, setVideoDescription] = useState<string>('');
-  const [transcript, setTranscript] = useState<string>("");
-      const [loading, setLoading] = useState<boolean>(false);
+ 
 
   useEffect(() => {
     const url = localStorage.getItem('videoUrl');
